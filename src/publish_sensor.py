@@ -54,7 +54,11 @@ class sensor():
 
 if __name__ == '__main__':
 	try:
-		x = sensor(0x29)
-		x.publish_sensor()
+		a = sensor(0x29)
+		a.publish_sensor()
+		b = sensor(0x39)
+		b.publish_sensor()
+		c = sensor(0x49)
+		c.publish_sensor()
 	except rospy.ROSInterruptException:
 		pass
