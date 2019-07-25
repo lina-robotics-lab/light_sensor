@@ -32,16 +32,16 @@ class sensor():
 
 		# Read data back from 0x0E (14) with command register, 0x80 (128), 2 bytes
 		# ch1 LSB, ch1 MSB
-		data1 = self.bus.read_i2c_block_data(self.addr, 0x0E | 0x80, 2)
+		# data1 = self.bus.read_i2c_block_data(self.addr, 0x0E | 0x80, 2)
 
 		# Convert the data
 		ch0 = data0[1] * 256 + data0[0]
-		ch1 = data1[1] * 256 + data1[0]
+		# ch1 = data1[1] * 256 + data1[0]
 
 		# Output data to screen 
 		print("Full Spectrum (IR + Visible) :%d lux" %ch0)
-		print("Infrared Value :%d lux" %ch1)
-		print("Visible Value :%d lux" %(ch0 - ch1))
+		# print("Infrared Value :%d lux" %ch1)
+		# print("Visible Value :%d lux" %(ch0 - ch1))
 
 		return ch0
 	
