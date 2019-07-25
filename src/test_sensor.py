@@ -3,7 +3,7 @@
 import rospy
 import numpy as np
 import message_filters
-from std_msgs.msg import Int64
+from std_msgs.msg import Int16
 
 class subscribe_sensors():
 	def __init__(self):
@@ -12,16 +12,18 @@ class subscribe_sensors():
 		self.c_array = []
 		self.max_array = []
 		self.average_array = []
+
+	def listener(self):
 		rospy.init_node("test_sensor")
-	    sub_a = message_filters.Subscriber("a/light_sensor", Int64)
-	    # sub_a.registerCallback(callback_a)
-	    sub_b = message_filters.Subscriber("b/light_sensor", Int64)
-	    # sub_b.registerCallback(callback_b)
-	    sub_c = message_filters.Subscriber("c/light_sensor", Int64)
-	    # sub_c.registerCallback(callback_c)
-	    ts = message_filters.TimeSynchronizer([sub_a, sub_b, sub_c], 10)
-	    ts.registerCallback(callback)
-	    rospy.spin()
+		sub_a = message_filters.Subscriber("a/light_sensor", Int16)
+		# sub_a.registerCallback(callback_a)
+		sub_b = message_filters.Subscriber("b/light_sensor", Int16)
+		# sub_b.registerCallback(callback_b)
+		sub_c = message_filters.Subscriber("c/light_sensor", Int16)
+		# sub_c.registerCallback(callback_c)
+		ts = message_filters.TimeSynchronizer([sub_a, sub_b, sub_c], 10)
+		ts.registerCallback(self.callback)
+		rospy.spin()
 
 	def callback(self, a, b, c):
 		self.a_array.append(a)
@@ -43,4 +45,6 @@ class subscribe_sensors():
 
 
 if __name__ == '__main__':
-    listener()
+	test_sensors = subscribe_sensors()
+	test_sensors.listener()
+	print(test_sensors.max_array)
