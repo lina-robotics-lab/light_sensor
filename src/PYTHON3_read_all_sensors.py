@@ -24,3 +24,7 @@ def read_all_sensors():
 
 	sensor_reading = [tsl0.lux, tsl1.lux, tsl2.lux, tsl3.lux, tsl4.lux, tsl5.lux, tsl6.lux, tsl7.lux]
 	return sensor_reading
+
+if __name__ == '__main__':
+	while True:
+		print(read_all_sensors())
