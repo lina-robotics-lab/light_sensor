@@ -10,18 +10,20 @@ class sensor():
 		self.sensor_readings = Float32MultiArray()
 		
 	def publish_sensor(self):
+		r = rospy.Rate(10)
 		while not rospy.is_shutdown():
 			try:
 				self.sensor_readings.data = read_all_sensors()
 			except RuntimeError as e:
-				print(e)
-			print(self.sensor_readings.data)
+				return
+				#print(e)
+			#print(self.sensor_readings.data)
 			self.sensor_publisher.publish(self.sensor_readings)
-
+			r.sleep()
 
 if __name__ == '__main__':
 	try:
-		print("Error Here?")
+		print("Starting Light Sensor Readings")
 		a = sensor()
 		while not rospy.is_shutdown():
 			a.publish_sensor()
