@@ -5,12 +5,12 @@ import busio
 import adafruit_tsl2591
 import adafruit_tca9548a
 
-def read_all_sensors():
+def read_all_sensors(tca):
 	# Create I2C bus as normal
-	i2c = busio.I2C(board.SCL, board.SDA)
+#	i2c = busio.I2C(board.SCL, board.SDA)
 
 	# Create the TCA9548A object and give it the I2C bus
-	tca = adafruit_tca9548a.TCA9548A(i2c)
+#	tca = adafruit_tca9548a.TCA9548A(i2c)
 
 	# For each sensor, create it using the TCA9548A channel instead of the I2C object
 	tsl0 = adafruit_tsl2591.TSL2591(tca[0])
@@ -26,5 +26,11 @@ def read_all_sensors():
 	return sensor_reading
 
 if __name__ == '__main__':
+  # Create I2C bus as normal
+	i2c = busio.I2C(board.SCL, board.SDA)
+
+        # Create the TCA9548A object and give it the I2C bus
+	tca = adafruit_tca9548a.TCA9548A(i2c)
+
 	while True:
-		print(read_all_sensors())
+		print(read_all_sensors(tca))

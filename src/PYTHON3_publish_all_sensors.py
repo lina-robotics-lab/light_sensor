@@ -8,12 +8,18 @@ class sensor():
 		self.node = rospy.init_node("light_sensors", anonymous=True)
 		self.sensor_publisher = rospy.Publisher("sensor_readings", Float32MultiArray, queue_size=10)
 		self.sensor_readings = Float32MultiArray()
+   # Create I2C bus as normal
+		self.i2c = busio.I2C(board.SCL, board.SDA)
+
+        # Create the TCA9548A object and give it the I2C bus
+	       	self.tca = adafruit_tca9548a.TCA9548A(i2c)
+
 		
 	def publish_sensor(self):
 		r = rospy.Rate(10)
 		while not rospy.is_shutdown():
 			try:
-				self.sensor_readings.data = read_all_sensors()
+				self.sensor_readings.data = read_all_sensors(self.tca)
 			except RuntimeError as e:
 				return
 				#print(e)
