@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
+import busio
+import board
 import rospy
-from read_all_sensors import read_all_sensors
+from PYTHON3_read_all_sensors import read_all_sensors
 from std_msgs.msg import Float32MultiArray
-
+import adafruit_tca9548a
 class sensor():
 	def __init__(self):
 		self.node = rospy.init_node("light_sensors", anonymous=True)
@@ -12,7 +14,7 @@ class sensor():
 		self.i2c = busio.I2C(board.SCL, board.SDA)
 
         # Create the TCA9548A object and give it the I2C bus
-	       	self.tca = adafruit_tca9548a.TCA9548A(i2c)
+		self.tca = adafruit_tca9548a.TCA9548A(self.i2c)
 
 		
 	def publish_sensor(self):
