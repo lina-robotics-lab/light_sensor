@@ -25,7 +25,7 @@ class sensor():
 			except RuntimeError as e:
 				return
 				#print(e)
-			#print(self.sensor_readings.data)
+			print(self.sensor_readings.data)
 			self.sensor_publisher.publish(self.sensor_readings)
 			r.sleep()
 
