@@ -4,6 +4,7 @@ import board
 import rospy
 import numpy as np
 import socket
+import os
 from PYTHON3_read_all_sensors import read_all_sensors
 from std_msgs.msg import Float32MultiArray
 import adafruit_tca9548a
@@ -13,7 +14,7 @@ class sensor():
 		self.sensor_publisher = rospy.Publisher("sensor_readings", Float32MultiArray, queue_size=10)
 		self.coefs_publisher = rospy.Publisher("sensor_coefs", Float32MultiArray, queue_size=10)
 		self.coefs=Float32MultiArray()
-		self.coefs.data=np.loadtxt('/home/pi/coefs_{}.txt'.format(socket.gethostname()),delimiter=',')
+		self.coefs.data=np.loadtxt('{}/coefs_{}.txt'.format(os.environ['HOME'],socket.gethostname()),delimiter=',')
 		self.sensor_readings = Float32MultiArray()
    # Create I2C bus as normal
 		self.i2c = busio.I2C(board.SCL, board.SDA)
