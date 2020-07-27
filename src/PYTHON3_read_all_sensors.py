@@ -32,5 +32,5 @@ if __name__ == '__main__':
         # Create the TCA9548A object and give it the I2C bus
 	tca = adafruit_tca9548a.TCA9548A(i2c)
 
-	while True:
-		print(read_all_sensors(tca))
+	#while True:
+	#	print(read_all_sensors(tca))
