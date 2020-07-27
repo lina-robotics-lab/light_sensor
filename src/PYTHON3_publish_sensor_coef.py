@@ -19,7 +19,7 @@ class sensor():
 
 if __name__ == '__main__':
 	try:
-		print("Starting Light Sensor Readings")
+		print("Publishing Light Sensor Coefs")
 		a = sensor()
 		while not rospy.is_shutdown():
 			a.publish_coef()
