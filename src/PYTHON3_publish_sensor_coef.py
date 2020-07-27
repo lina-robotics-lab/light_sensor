@@ -14,7 +14,6 @@ class sensor():
 	def publish_coef(self):
 		r = rospy.Rate(10)
 		while not rospy.is_shutdown():
-			self.sensor_publisher.publish(self.sensor_readings)
 			self.coefs_publisher.publish(self.coefs)
 			r.sleep()
 
