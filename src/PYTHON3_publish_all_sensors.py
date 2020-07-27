@@ -26,15 +26,14 @@ class sensor():
 			try:
 				self.sensor_readings.data = read_all_sensors(self.tca)
 			except RuntimeError as e:
+				print(e)
 				return
-				#print(e)
-			print(self.sensor_readings.data)
+				
 			self.sensor_publisher.publish(self.sensor_readings)
 			r.sleep()
 
 if __name__ == '__main__':
 	try:
-		print("Starting Light Sensor Readings")
 		a = sensor()
 		while not rospy.is_shutdown():
 			a.publish_sensor()
