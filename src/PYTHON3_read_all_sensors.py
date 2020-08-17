@@ -4,7 +4,7 @@ import board
 import busio
 import adafruit_tsl2591
 import adafruit_tca9548a
-
+import numpy as np
 
 def read_all_sensors(tca):
 	sensor_reading = []
@@ -31,6 +31,7 @@ if __name__ == '__main__':
 			sensor_reading.append(tsl.lux)
 		except ValueError:
 			print('Sensor Not Found at position {}'.format(i))
-	print(sensor_reading)
-	#while True:
-	#	print(read_all_sensors(tca))
+	
+	while True:
+		print(np.mean(read_all_sensors(tca)))
+		time.sleep(0.1)
