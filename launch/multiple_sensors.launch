@@ -1,5 +1,0 @@
-<launch>
-  <node name="light_sensor" ns="a" pkg="light_sensor" type="sensor_0x29.py"/>
-  <node name="light_sensor" ns="b" pkg="light_sensor" type="sensor_0x39.py"/>
-  <node name="light_sensor" ns="c" pkg="light_sensor" type="sensor_0x49.py"/>
-</launch>
