@@ -21,7 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
         'listener = light_sensor.listener:main',
-        'talker = light_sensor.talker:main'
+        'talker = light_sensor.talker:main',
+	'publish_light = light_sensor.publish_light:main'
         ],
     },
 )
