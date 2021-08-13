@@ -5,32 +5,30 @@ import adafruit_tsl2591
 import adafruit_tca9548a
 import numpy as np
 
-def read_all_sensors(tca):
-	sensor_reading = []
-	for i in range(8):
-		try:
-			tsl=adafruit_tsl2591.TSL2591(tca[i])
-			sensor_reading.append(tsl.lux)
-		except ValueError:
-			pass
-			# ValueError arises normally the sensor is missing at that position.
+class sensor_reader:
+	def __init__(self):
+  		# Create I2C bus as normal
+		self.i2c = busio.I2C(board.SCL,board.SDA)
+		
+		self.tca = adafruit_tca9548a.TCA9548A(self.i2c)		
+	def read_all_sensors(self):
+        	# Create the TCA9548A object and give it the I2C bus
+		sensor_reading = []
+		sensors_at_position = []
+		for i in range(8):
+			try:
+				tsl=adafruit_tsl2591.TSL2591(self.tca[i])
+				sensor_reading.append(tsl.lux)
+				sensors_at_position.append(i)
+			except ValueError:
+				#print('Sensor Not Found at position {}'.format(i))
+				pass
+		print("Sensors at position"+str(sensors_at_position))
+		return sensor_reading
 
-	return sensor_reading
 
 if __name__ == '__main__':
-  # Create I2C bus as normal
-	i2c = busio.I2C(board.SCL, board.SDA)
-
-        # Create the TCA9548A object and give it the I2C bus
-	tca = adafruit_tca9548a.TCA9548A(i2c)
-	sensor_reading = []
-	for i in range(8):
-		try:
-			tsl=adafruit_tsl2591.TSL2591(tca[i])
-			sensor_reading.append(tsl.lux)
-		except ValueError:
-			print('Sensor Not Found at position {}'.format(i))
-	
+	sr = sensor_reader()
 	while True:
-		print(np.mean(read_all_sensors(tca)))
+		print(np.mean(sr.read_all_sensors()))
 		time.sleep(0.1)
