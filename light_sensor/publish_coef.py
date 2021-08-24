@@ -14,25 +14,12 @@ import pickle as pkl
 
 class coef_publisher(Node):
 	def __init__(self,robot_namespace,path_to_coef):
-		super().__init__('coef_publisher')
-		sleep_time = 0.1
-		self.timer = self.create_timer(sleep_time,self.timer_callback)
-
-		qos = QoSProfile(depth=10)
-
+		super().__init__('coef',namespace=robot_namespace)
 		self.coefs = {}
 		if not path_to_coef is None:
 			with open(path_to_coef,'rb') as file:
 				self.coefs = pkl.load(file)
-				self.coef_pub = {name:self.create_publisher(Float32,'/{}/{}'.format(robot_namespace,name),qos) for name in self.coefs.keys()}
-
-	def timer_callback(self):
-		print('Publishing Coefs')
-		for name,val in self.coefs.items():
-			msg = Float32()
-			msg.data = val
-			self.coef_pub[name].publish(msg)
-
+				_=[self.declare_parameter(name,val) for name,val in self.coefs.items()]
 
 def main(args = sys.argv):
 	rclpy.init(args=args)
@@ -42,8 +29,6 @@ def main(args = sys.argv):
 		path_to_coef = args_without_ros[1]
 	else:
 		print("No path_to_coef is supplied!")
-		#path_to_coef = '{}/coefs.pkl'.format(os.environ['HOME'],socket.gethostname())
-
 	cp = coef_publisher(robot_namespace = socket.gethostname(),path_to_coef = path_to_coef)
 	try:
 		print("Coef Publisher Up")
