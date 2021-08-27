@@ -21,8 +21,10 @@ class sensor_reader:
 				sensor_reading.append(tsl.lux)
 				sensors_at_position.append(i)
 			except ValueError:
-				#print('Sensor Not Found at position {}'.format(i))
-				pass
+				print('Sensor Not Found at position {}'.format(i))
+			except RuntimeError:
+				print('Sensor Not Found at position {}'.format(i))
+
 		print("Sensors at position"+str(sensors_at_position))
 		return sensor_reading
 
