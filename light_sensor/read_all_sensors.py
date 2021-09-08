@@ -24,6 +24,8 @@ class sensor_reader:
 				print('Sensor Not Found at position {}'.format(i))
 			except RuntimeError:
 				print('Sensor Not Found at position {}'.format(i))
+			except OSError:
+				print('Skipping Remote I/O Error  at position {}. Try again next time.'.format(i))
 
 		print("Sensors at position"+str(sensors_at_position))
 		return sensor_reading
