@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
 import busio
 import board
 import rospy
 import numpy as np
 import socket
 import os
-from PYTHON3_read_all_sensors import read_all_sensors
+from read_all_sensors import read_all_sensors
 from std_msgs.msg import Float32MultiArray
 import adafruit_tca9548a
 class sensor():
