@@ -8,18 +8,28 @@ sys.path.insert(0,os.path.abspath(tools_root))
 import rclpy
 from rclpy.qos import QoSProfile
 from rclpy.node import Node
-from std_msgs.msg import Float32
+from std_msgs.msg import Float32MultiArray
 
 import pickle as pkl
 
 class coef_publisher(Node):
 	def __init__(self,robot_namespace,path_to_coef):
 		super().__init__('coef',namespace=robot_namespace)
-		self.coefs = {}
+		self.coefs = []
+		sleep_time = 0.5
 		if not path_to_coef is None:
 			with open(path_to_coef,'rb') as file:
-				self.coefs = pkl.load(file)
-				_=[self.declare_parameter(name,val) for name,val in self.coefs.items()]
+				coefs = pkl.load(file)
+				self.coefs = [coefs['k'],coefs['b'],coefs['C0'],coefs['C1']]
+				self.pub = self.create_publisher(Float32MultiArray,'sensor_coefs',qos)
+				self.timer = self.create_timer(sleep_time,self.timer_callback)
+	def timer_callback(self):
+
+		out = Float32MultiArray()
+		out.data = self.coefs
+
+		# self.get_logger().info(str(out.data))
+		self.pub.publish(out)
 
 def main(args = sys.argv):
 	rclpy.init(args=args)
