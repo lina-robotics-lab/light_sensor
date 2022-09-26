@@ -16,7 +16,7 @@ import pickle as pkl
 class light_publisher(Node):
 	def __init__(self,robot_namespace):
 		super().__init__('light_publisher',namespace=robot_namespace)
-		sleep_time = 0.1
+		sleep_time = 0.5
 		qos = QoSProfile(depth=10)
 		self.pub = self.create_publisher(Float32MultiArray,'sensor_readings',qos)
 		self.timer = self.create_timer(sleep_time,self.timer_callback)
@@ -27,7 +27,7 @@ class light_publisher(Node):
 		out = Float32MultiArray()
 		out.data = self.sr.read_all_sensors()
 
-		#print(out.data)
+		# self.get_logger().info(str(out.data))
 		self.pub.publish(out)
 
 
