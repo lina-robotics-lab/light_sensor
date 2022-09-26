@@ -17,6 +17,7 @@ class coef_publisher(Node):
 		super().__init__('coef',namespace=robot_namespace)
 		self.coefs = []
 		sleep_time = 0.5
+		qos = QoSProfile(depth=10)
 		if not path_to_coef is None:
 			with open(path_to_coef,'rb') as file:
 				coefs = pkl.load(file)
