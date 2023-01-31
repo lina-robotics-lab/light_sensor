@@ -25,6 +25,7 @@ setup(
         'listener = light_sensor.listener:main',
         'talker = light_sensor.talker:main',
 	'publish_light = light_sensor.publish_light:main',
+	'publish_single_light = light_sensor.publish_single_light:main',
 	'publish_coef = light_sensor.publish_coef:main'
         ],
     },
